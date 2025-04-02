@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đặt lịch cắt tóc tại nhà</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <script>
+        // Hàm tính tổng chi phí dựa trên các dịch vụ được chọn
+        function calculateTotalPrice() {
+            const checkboxes = document.querySelectorAll('input[name="services"]:checked');
+            let total = 0;
+
+            checkboxes.forEach(checkbox => {
+                total += parseInt(checkbox.dataset.price, 10); // Lấy giá từ thuộc tính `data-price`
+            });
+
+            // Hiển thị tổng chi phí vào ô input
+            document.getElementById('totalPrice').value = total;
+        }
+    </script>
+</head>
+
+<body>
+    <div class="container mt-5">
+        <h2 class="text-center">Đặt Lịch Cắt Tóc Tại Nhà</h2>
+        <form action="/api/bookings" method="POST">
+            <div class="form-group">
+                <!-- Input ẩn để chứa customerId -->
+                <input type="hidden" id="customerId" name="customerId" value="<%= user.id %>">
+            </div>
+            <div class="form-group">
+                <label for="name">Họ và Tên</label>
+                <input type="text" class="form-control" id="name" name="name" required>
+            </div>
+            <div class="form-group">
+                <label for="phone">Số Điện Thoại</label>
+                <input type="text" class="form-control" id="phone" name="phone" required>
+            </div>
+            <div class="form-group">
+                <label for="address">Địa Chỉ</label>
+                <input type="text" class="form-control" id="address" name="address" required>
+            </div>
+            <div class="form-group">
+                <label for="datetime">Chọn Ngày & Giờ</label>
+                <input type="datetime-local" class="form-control" id="datetime" name="datetime" required>
+            </div>
+            <div class="form-group">
+                <label for="barber">Chọn Thợ Cắt Tóc</label>
+                <select class="form-control" id="barber" name="barber" required>
+                    <option value="">Chọn thợ...</option>
+                    <% barbers.forEach(barber=> { %>
+                        <option value="<%= barber._id %>">
+                            <%= barber.fullName %>
+                        </option>
+                        <% }); %>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="service">Chọn Dịch Vụ</label>
+                <div>
+                    <% services.forEach(service=> { %>
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" id="service-<%= service.id %>"
+                                name="services" value="<%= service.id %>" data-price="<%= service.price %>"
+                                onchange="calculateTotalPrice()">
+                            <label class="form-check-label" for="service-<%= service._id %>">
+                                <%= service.name %> - <%= service.price %> VND
+                            </label>
+                        </div>
+                        <% }); %>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="totalPrice">Tổng Chi Phí</label>
+                <input type="number" class="form-control" id="totalPrice" name="totalPrice" readonly>
+            </div>
+            <div class="d-flex justify-content-between">
+                <a href="/home" class="btn btn-secondary">Về Trang Chủ</a>
+                <button type="submit" class="btn btn-primary">Đặt Lịch</button>
+            </div>
+        </form>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BARBERSHIP</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #f8f9fa;
+    }
+
+    .form-container {
+      max-width: 400px;
+      margin: 50px auto;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      background: #fff;
+    }
+
+    .form-header {
+      display: flex;
+      justify-content: space-around;
+      margin-bottom: 20px;
+    }
+
+    .form-header button {
+      width: 100px;
+    }
+  </style>
+</head>
+<body>
+  <div class="form-container">
+    <div class="form-header">
+      <button id="login-tab" class="btn btn-primary" onclick="showLogin()">Login</button>
+      <button id="register-tab" class="btn btn-outline-primary" onclick="showRegister()">Register</button>
+    </div>
+    <div id="login-form">
+      <h4 class="text-center mb-4">Login</h4>
+      <form action="/api/login" method="POST">
+        <div class="mb-3">
+          <label for="loginEmail" class="form-label">Email</label>
+          <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email">
+        </div>
+        <div class="mb-3">
+          <label for="loginPassword" class="form-label">Password</label>
+          <input type="password" class="form-control" id="password" name="password" placeholder="Enter your password">
+        </div>
+        <button type="submit" class="btn btn-primary w-100">Login</button>
+      </form>
+    </div>
+
+    <div id="register-form" style="display: none;">
+      <h4 class="text-center mb-4">Register</h4>
+      <form action="/api/register" method="POST">
+        <div class="mb-3">
+          <label for="fillName" class="form-label">Full Name</label>
+          <input type="text" class="form-control" id="fullName" name="fullName" placeholder="Enter your full name">
+        </div>
+        <div class="mb-3">
+          <label for="registerEmail" class="form-label">Email</label>
+          <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email">
+        </div>
+        <div class="mb-3">
+          <label for="registerPassword" class="form-label">Password</label>
+          <input type="password" class="form-control" id="password" name="password" placeholder="Create a password">
+        </div>
+        <button type="submit" class="btn btn-primary w-100">Register</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    function showLogin() {
+      document.getElementById('login-form').style.display = 'block';
+      document.getElementById('register-form').style.display = 'none';
+      document.getElementById('login-tab').classList.add('btn-primary');
+      document.getElementById('login-tab').classList.remove('btn-outline-primary');
+      document.getElementById('register-tab').classList.add('btn-outline-primary');
+      document.getElementById('register-tab').classList.remove('btn-primary');
+    }
+
+    function showRegister() {
+      document.getElementById('login-form').style.display = 'none';
+      document.getElementById('register-form').style.display = 'block';
+      document.getElementById('register-tab').classList.add('btn-primary');
+      document.getElementById('register-tab').classList.remove('btn-outline-primary');
+      document.getElementById('login-tab').classList.add('btn-outline-primary');
+      document.getElementById('login-tab').classList.remove('btn-primary');
+    }
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
